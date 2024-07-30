@@ -1,0 +1,16 @@
+@import "../styles/colors";
+
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  background: linear-gradient(to bottom right, $rich-black, $black);
+  min-height: 100vh;
+  min-width: 100vw;
+
+  a {
+    margin-top: 25px;
+  }
+}
