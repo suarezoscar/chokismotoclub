@@ -9,8 +9,14 @@
   background: linear-gradient(to bottom right, $rich-black, $black);
   min-height: 100vh;
   min-width: 100vw;
+  width: 100vw;
+  height: 100vh;
 
   a {
     margin-top: 25px;
+  }
+
+  &__logo {
+    max-width: 300px;
   }
 }
