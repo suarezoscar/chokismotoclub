@@ -3,6 +3,8 @@ const path = require("path");
 
 const sourceDir = path.join(__dirname, "dist", "chokismotoclub", "browser");
 const destDir = path.join(__dirname, "docs");
+const cnameFilePath = path.join(destDir, "CNAME");
+const cnameContent = "stg.chokismotoclub.es";
 
 function copyFile(src, dest) {
   return new Promise((resolve, reject) => {
@@ -51,13 +53,23 @@ function removeDirectory(dir) {
   });
 }
 
+function createCnameFile(filePath, content) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filePath, content, (err) => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
+}
+
 async function moveFiles() {
   try {
     await removeDirectory(destDir);
     await copyDirectory(sourceDir, destDir);
-    console.log("Archivos movidos exitosamente!");
+    await createCnameFile(cnameFilePath, cnameContent);
+    console.log("Archivos movidos y CNAME creado exitosamente!");
   } catch (err) {
-    console.error("Error al mover los archivos:", err);
+    console.error("Error al mover los archivos o crear el CNAME:", err);
   }
 }
 
