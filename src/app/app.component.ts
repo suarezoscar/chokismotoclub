@@ -1,12 +1,11 @@
-import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { SmokeEffectComponent } from './components/SmokeEffect/smoke-effect.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgOptimizedImage, SmokeEffectComponent],
+  imports: [SmokeEffectComponent, LogoComponent],
 
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

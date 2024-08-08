@@ -14,9 +14,9 @@ import {
   standalone: true,
 })
 export class SmokeEffectComponent implements OnInit, AfterViewInit {
-  private NUM_PARTICLES = 50;
+  private NUM_PARTICLES = 20;
   private particles: Particle[] = [];
-  private fps = 30;
+  private fps = 60;
   private fpsInterval = 1000 / this.fps;
   private then = Date.now();
   private raf!: number;
