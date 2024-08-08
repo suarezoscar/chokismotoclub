@@ -1,4 +1,5 @@
-@import "./../../../styles/_colors.scss";
+@import "./../../../styles/colors";
+@import "./../../../styles/animations";
 
 main {
   display: flex;
@@ -15,75 +16,41 @@ main {
   }
 
   .logo-container {
+    width: 100vw;
+    height: 60vh;
+    overflow: hidden;
+
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* Tamaño inicial del contenedor */
-    width: 100vw;
-    height: 50vh;
-    overflow: hidden;
+
+    font-family: "Black Ops One";
+    color: $light-orange;
+    text-align: center;
 
     #logo {
       max-width: 50vw;
-      /* height: 350px; */
-      animation: acercamiento 3s ease-in-out forwards, pulso 5s ease-in-out
-        infinite 4s;
+      animation: coming 3s ease-in-out forwards, beat 5s ease-in-out infinite 4s;
     }
 
     #title {
       font-size: 2rem;
-      font-family: "Black Ops One";
-      color: $light-orange;
-      animation: acercamiento 4.5s ease-in-out forwards;
+
+      animation: coming 4.5s ease-in-out forwards;
     }
 
     #subtitle {
       font-size: 1.5rem;
-      font-family: "Black Ops One";
-      color: $light-orange;
-      text-align: center;
-      animation: acercamiento 4.5s ease-in-out forwards;
+      animation: coming 4.5s ease-in-out forwards;
       &__sm {
         font-size: 0.8em;
-        font-family: "Black Ops One";
-        color: $light-orange;
-        text-align: center;
-        animation: acercamiento 5.5s ease-in-out forwards;
+        animation: coming 5.5s ease-in-out forwards;
       }
     }
   }
 
   footer {
     animation: fadeInFromNone 8s ease-in;
-  }
-}
-
-@keyframes acercamiento {
-  0% {
-    transform: scale(0);
-    opacity: 0; /* Invisible */
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1; /* Totalmente visible */
-  }
-}
-
-@keyframes fadeInFromNone {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes pulso {
-  0%, 100% {
-      transform: scale(1);
-  }
-  50% {
-      transform: scale(.95);
   }
 }
