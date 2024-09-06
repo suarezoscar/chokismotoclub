@@ -31,26 +31,35 @@ main {
 
     #logo {
       max-width: 50vw;
-      animation: coming 3s ease-in-out forwards, beat 5s ease-in-out infinite 4s;
+      animation: coming 5s ease-in-out forwards, beat 6s ease-in-out infinite 5s;
     }
 
     #title {
       font-size: 2rem;
 
-      animation: coming 4.5s ease-in-out forwards;
+      animation: coming 3s ease-in-out forwards;
     }
 
     #subtitle {
       font-size: 1.5rem;
-      animation: coming 4.5s ease-in-out forwards;
+      animation: coming 3s ease-in-out forwards;
+  
       &__sm {
         font-size: 0.8em;
-        animation: coming 5.5s ease-in-out forwards;
+        animation: coming 3s ease-in-out forwards;
       }
     }
   }
 
   footer {
-    animation: fadeInFromNone 8s ease-in;
+    animation: coming 4.5s ease-in-out forwards;
+
+    .icon-hover {
+      transition: transform 0.3s ease-in-out;
+      display: inline-block;
+      &:hover {
+        transform: scale(.9);
+      }
+    }
   }
 }
