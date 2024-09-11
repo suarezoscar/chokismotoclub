@@ -9,7 +9,7 @@ main {
   min-height: 100vh;
   min-width: 100vw;
   width: 100vw;
-  height: 100vh;
+  overflow: auto;
 
   a {
     margin-top: 25px;
@@ -43,7 +43,7 @@ main {
     #subtitle {
       font-size: 1.5rem;
       animation: coming 3s ease-in-out forwards;
-  
+
       &__sm {
         font-size: 0.8em;
         animation: coming 3s ease-in-out forwards;
@@ -58,8 +58,12 @@ main {
       transition: transform 0.3s ease-in-out;
       display: inline-block;
       &:hover {
-        transform: scale(.9);
+        transform: scale(0.9);
       }
     }
+  }
+
+  section {
+    color: $light-orange;
   }
 }
