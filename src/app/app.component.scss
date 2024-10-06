@@ -1,3 +1,25 @@
+@import "colors";
+@import "animations";
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 100vw;
+  width: 100vw;
+  overflow: auto;
+
+  a {
+    margin-top: 25px;
+  }
+
+  section {
+    color: $light-orange;
+  }
+}
+
 footer {
   position: absolute;
   bottom: 0;
