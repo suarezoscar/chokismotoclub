@@ -1,0 +1,51 @@
+.news-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  color: #fff;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    font-family: "Black Ops One", sans-serif;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 1rem;
+
+    &::after {
+      background-color: #f8a100;
+    }
+  }
+
+  .news-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+
+    .news-item {
+      padding: 1.75rem;
+      border-radius: 12px;
+      background-color: #111;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+
+      h3 {
+        color: #fff;
+      }
+
+      .news-date {
+        color: #aaa;
+      }
+
+      p {
+        color: #ddd;
+      }
+
+      .news-footer {
+        border-top: 1px solid #333;
+      }
+    }
+  }
+}

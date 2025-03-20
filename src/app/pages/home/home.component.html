@@ -1,0 +1,13 @@
+<div class="home-container">
+  <div class="logo-section" [style.opacity]="1 - scrollProgress">
+    <app-logo></app-logo>
+  </div>
+
+  <div class="scroll-trigger" [style.height]="'200vh'"></div>
+
+  <div class="news-section"
+       [style.transform]="'translateY(' + (100 - scrollProgress * 100) + 'vh)'">
+    <app-news></app-news>
+    <app-eventos></app-eventos>
+  </div>
+</div>

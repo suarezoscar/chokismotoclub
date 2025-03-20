@@ -1,13 +1,22 @@
-import { Component } from '@angular/core';
-import { SmokeEffectComponent } from './components/SmokeEffect/smoke-effect.component';
-import { LogoComponent } from './components/logo/logo.component';
+import { Component, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { TopBarComponent } from './components/top-bar/top-bar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [SmokeEffectComponent, LogoComponent],
-
+  imports: [CommonModule, RouterOutlet, TopBarComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {}
+export class AppComponent {
+  showTopBar = false;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    // Only handle top bar visibility
+    const scrollPosition = window.scrollY;
+    this.showTopBar = scrollPosition > window.innerHeight * 0.15;
+  }
+}
