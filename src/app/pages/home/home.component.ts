@@ -23,8 +23,8 @@ export class HomeComponent {
     // Calculate scroll progress (0 to 1)
     // Start transition after 20% of viewport height
     // Complete transition by 80% of viewport height
-    const startPoint = windowHeight * 0.2;
-    const endPoint = windowHeight;
+    const startPoint = windowHeight * 0.1;
+    const endPoint = windowHeight * 0.8;
 
     if (scrollPosition < startPoint) {
       this.scrollProgress = 0;
