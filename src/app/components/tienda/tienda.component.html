@@ -16,10 +16,10 @@
   </div>
 
   <!-- Productos -->
-  <div *ngIf="!loading && !error" class="productos-items">
+  @if(!loading && !error && productos.length > 0) {
+  <div class="productos-items">
     <div *ngFor="let producto of productos; trackBy: trackByProducto" class="producto-item"
-      [class.no-image]="!hasValidImage(producto) || producto._imageError"
-      [class.agotado]="!producto.disponible">
+      [class.no-image]="!hasValidImage(producto) || producto._imageError" [class.agotado]="!producto.disponible">
 
       <!-- Solo mostrar imagen si existe, es válida y no ha fallado -->
       <div class="producto-image" *ngIf="hasValidImage(producto) && !producto._imageError">
@@ -41,7 +41,7 @@
         <h3>{{ producto.nombre }}</h3>
         <div class="producto-categoria" *ngIf="producto.categoria">🏷️ {{ producto.categoria }}</div>
         <p>{{ producto.descripcion }}</p>
-        
+
         <!-- Solo mostrar info de precio y stock si tiene precio -->
         <div class="producto-info" *ngIf="tienePrecio(producto)">
           <div class="producto-precio">{{ formatearPrecio(producto.precio) }}</div>
@@ -58,9 +58,13 @@
       </div>
     </div>
   </div>
-
+  }
+  @else if(!loading && !error && productos.length ===0) {
   <!-- Mensaje si no hay productos (solo cuando no está cargando y no hay error) -->
   <div *ngIf="!loading && !error && productos.length === 0" class="no-productos">
     <p>🛒 No hay productos disponibles en este momento.</p>
   </div>
+
+  }
+
 </div>
