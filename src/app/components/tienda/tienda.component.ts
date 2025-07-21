@@ -25,7 +25,7 @@ export class TiendaComponent implements OnInit, OnDestroy {
     private tiendaService: TiendaService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -60,7 +60,7 @@ export class TiendaComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error al cargar productos:', error);
-        
+
         let errorMessage = 'Error al cargar los productos.';
         if (error.status === 0) {
           errorMessage = 'No se puede conectar al servidor.';
@@ -89,16 +89,13 @@ export class TiendaComponent implements OnInit, OnDestroy {
     return producto.id || index.toString();
   }
 
-  truncarTexto(texto: string, limite: number = 100): string {
-    if (texto.length <= limite) return texto;
-    return texto.substring(0, limite) + '...';
-  }
+
 
   hasValidImage(producto: Producto): boolean {
     if (!producto.imagen) {
       return false;
     }
-    
+
     try {
       new URL(producto.imagen);
       return true;
@@ -111,11 +108,11 @@ export class TiendaComponent implements OnInit, OnDestroy {
     if (!producto.imagen) {
       return '';
     }
-    
+
     if ((producto as any)._imageError) {
       return '';
     }
-    
+
     return producto.imagen;
   }
 
@@ -141,7 +138,7 @@ export class TiendaComponent implements OnInit, OnDestroy {
     const mensaje = `Hola! Me interesa obtener más información sobre: ${producto.nombre}`;
     const mensajeCodificado = encodeURIComponent(mensaje);
     const instagramUrl = `https://ig.me/m/chokismotoclub`;
-    
+
     // Abrir en nueva ventana/pestaña
     window.open(instagramUrl, '_blank');
   }

@@ -100,10 +100,7 @@ export class EventosComponent implements OnInit, OnDestroy {
     });
   }
 
-  truncarTexto(texto: string, limite: number = 150): string {
-    if (texto.length <= limite) return texto;
-    return texto.substring(0, limite) + '...';
-  }
+
 
   hasValidImage(evento: Evento): boolean {
     if (!evento.imagen) {

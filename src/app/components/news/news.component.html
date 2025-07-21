@@ -16,7 +16,9 @@
   </div>
 
   <!-- Noticias -->
-  <div *ngIf="!loading && !error" class="news-items">
+  @if(!loading && !error && noticias.length > 0){
+
+  <div class="news-items">
     <div *ngFor="let noticia of noticias; trackBy: trackByNoticia" class="news-item"
       [class.no-image]="!hasValidImage(noticia) || noticia._imageError">
 
@@ -37,17 +39,15 @@
       <div class="news-content">
         <h3>{{ noticia.titulo }}</h3>
         <div class="news-date">{{ formatearFecha(noticia.fecha_publicacion) }}</div>
-        <p>{{ truncarTexto(noticia.cuerpo) }}</p>
-
-        <div class="news-footer">
-          <a href="#" class="read-more">Leer más</a>
-        </div>
+        <p>{{ noticia.cuerpo }}</p>
       </div>
     </div>
-
-    <!-- Mensaje si no hay noticias -->
-    <div *ngIf="noticias.length === 0" class="no-news">
-      <p>📭 No hay noticias disponibles en este momento.</p>
-    </div>
   </div>
+  }
+  @else if (!loading && !error && noticias.length === 0) {
+  <!-- Mensaje si no hay noticias (solo cuando no está cargando y no hay error) -->
+  <div *ngIf="" class="no-news">
+    <p>📭 No hay noticias disponibles en este momento.</p>
+  </div>
+  }
 </div>

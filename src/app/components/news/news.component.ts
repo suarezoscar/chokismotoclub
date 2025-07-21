@@ -105,11 +105,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Método para truncar texto
-  truncarTexto(texto: string, limite: number = 150): string {
-    if (texto.length <= limite) return texto;
-    return texto.substring(0, limite) + '...';
-  }
+
 
   // Método para verificar si una noticia tiene imagen válida
   hasValidImage(noticia: Noticia): boolean {

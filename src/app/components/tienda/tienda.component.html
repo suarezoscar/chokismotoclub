@@ -40,7 +40,7 @@
       <div class="producto-content">
         <h3>{{ producto.nombre }}</h3>
         <div class="producto-categoria" *ngIf="producto.categoria">🏷️ {{ producto.categoria }}</div>
-        <p>{{ truncarTexto(producto.descripcion) }}</p>
+        <p>{{ producto.descripcion }}</p>
         
         <!-- Solo mostrar info de precio y stock si tiene precio -->
         <div class="producto-info" *ngIf="tienePrecio(producto)">
@@ -57,10 +57,10 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Mensaje si no hay productos -->
-    <div *ngIf="productos.length === 0" class="no-productos">
-      <p>🛒 No hay productos disponibles en este momento.</p>
-    </div>
+  <!-- Mensaje si no hay productos (solo cuando no está cargando y no hay error) -->
+  <div *ngIf="!loading && !error && productos.length === 0" class="no-productos">
+    <p>🛒 No hay productos disponibles en este momento.</p>
   </div>
 </div>
