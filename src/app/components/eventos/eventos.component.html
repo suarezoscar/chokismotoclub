@@ -16,7 +16,9 @@
   </div>
 
   <!-- Eventos -->
-  <div *ngIf="!loading && !error" class="eventos-items">
+  @if(!loading && !error && eventos.length > 0) {
+
+  <div class="eventos-items">
     <div *ngFor="let evento of eventos; trackBy: trackByEvento" class="evento-item"
       [class.no-image]="!hasValidImage(evento) || evento._imageError">
 
@@ -38,18 +40,16 @@
         <h3>{{ evento.titulo }}</h3>
         <div class="evento-date">{{ formatearFecha(evento.fecha_evento_inicio) }}</div>
         <div class="evento-location" *ngIf="evento.lugar">📍 {{ evento.lugar }}</div>
-        <p>{{ truncarTexto(evento.cuerpo) }}</p>
+        <p>{{ evento.cuerpo }}</p>
         <div class="evento-precio" *ngIf="evento.precio">💰 {{ evento.precio }}€</div>
-
-        <div class="evento-footer">
-          <a href="#" class="read-more">Ver detalles</a>
-        </div>
       </div>
     </div>
-
-    <!-- Mensaje si no hay eventos -->
-    <div *ngIf="eventos.length === 0" class="no-eventos">
-      <p>📅 No hay eventos programados en este momento.</p>
-    </div>
   </div>
+  }
+  @else if(!loading && !error && eventos.length === 0) {
+  <!-- Mensaje si no hay eventos (solo cuando no está cargando y no hay error) -->
+  <div class="no-eventos">
+    <p>📅 No hay eventos programados en este momento.</p>
+  </div>
+  }
 </div>
