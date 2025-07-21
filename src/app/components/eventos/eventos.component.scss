@@ -126,15 +126,17 @@
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 3rem;
     justify-items: center;
+    justify-content: center;
     align-items: start;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     
     // Responsive breakpoints
     @media (max-width: 1200px) {
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2.5rem;
+      max-width: 1200px;
     }
     
     @media (max-width: 768px) {
@@ -148,10 +150,18 @@
       max-width: 100%;
     }
 
-    // Para pantallas muy grandes, limitar a 3 columnas máximo
+    // Para pantallas muy grandes, usar grid fijo centrado
     @media (min-width: 1400px) {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 380px);
       gap: 3.5rem;
+      justify-content: center;
+    }
+
+    // Para pantallas medianas-grandes, usar 2 columnas centradas
+    @media (min-width: 900px) and (max-width: 1399px) {
+      grid-template-columns: repeat(2, 380px);
+      gap: 3rem;
+      justify-content: center;
     }
 
     .evento-item {
