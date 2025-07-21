@@ -43,7 +43,7 @@ main {
     #subtitle {
       font-size: 1.5rem;
       animation: coming 3s ease-in-out forwards;
-  
+
       &__sm {
         font-size: 0.8em;
         animation: coming 3s ease-in-out forwards;
@@ -57,6 +57,7 @@ main {
     .icon-hover {
       transition: transform 0.3s ease-in-out;
       display: inline-block;
+
       &:hover {
         transform: scale(.9);
       }

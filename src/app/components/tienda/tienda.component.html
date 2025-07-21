@@ -1,0 +1,66 @@
+<div class="tienda-container">
+  <h2>Tienda</h2>
+
+  <!-- Loading state with spinner -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner-container">
+      <div class="spinner"></div>
+      <p>Cargando productos...</p>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error && !loading" class="error-state">
+    <p>❌ {{ error }}</p>
+    <button (click)="cargarProductos()" class="retry-button">🔄 Reintentar</button>
+  </div>
+
+  <!-- Productos -->
+  <div *ngIf="!loading && !error" class="productos-items">
+    <div *ngFor="let producto of productos; trackBy: trackByProducto" class="producto-item"
+      [class.no-image]="!hasValidImage(producto) || producto._imageError"
+      [class.agotado]="!producto.disponible">
+
+      <!-- Solo mostrar imagen si existe, es válida y no ha fallado -->
+      <div class="producto-image" *ngIf="hasValidImage(producto) && !producto._imageError">
+        <img [src]="getImageSrc(producto)" [alt]="producto.nombre" (error)="onImageError($event, producto)"
+          (load)="onImageLoad(producto)" loading="lazy">
+        <div class="producto-badge" *ngIf="!producto.disponible">Agotado</div>
+      </div>
+
+      <!-- Placeholder visual cuando no hay imagen o falló la carga -->
+      <div class="producto-placeholder" *ngIf="!hasValidImage(producto) || producto._imageError">
+        <div class="placeholder-content">
+          <div class="placeholder-icon">🛒</div>
+          <span class="placeholder-text">{{ producto.nombre | slice:0:20 }}...</span>
+        </div>
+        <div class="producto-badge" *ngIf="!producto.disponible">Agotado</div>
+      </div>
+
+      <div class="producto-content">
+        <h3>{{ producto.nombre }}</h3>
+        <div class="producto-categoria" *ngIf="producto.categoria">🏷️ {{ producto.categoria }}</div>
+        <p>{{ truncarTexto(producto.descripcion) }}</p>
+        
+        <!-- Solo mostrar info de precio y stock si tiene precio -->
+        <div class="producto-info" *ngIf="tienePrecio(producto)">
+          <div class="producto-precio">{{ formatearPrecio(producto.precio) }}</div>
+          <div class="producto-stock" *ngIf="producto.stock !== undefined">
+            Stock: {{ producto.stock }}
+          </div>
+        </div>
+
+        <div class="producto-footer">
+          <button class="solicitar-info" (click)="solicitarInfo(producto)">
+            📩 Solicitar más info
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje si no hay productos -->
+    <div *ngIf="productos.length === 0" class="no-productos">
+      <p>🛒 No hay productos disponibles en este momento.</p>
+    </div>
+  </div>
+</div>

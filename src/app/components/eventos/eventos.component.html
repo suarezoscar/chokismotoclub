@@ -1,0 +1,55 @@
+<div class="eventos-container">
+  <h2>Próximos Eventos</h2>
+
+  <!-- Loading state with spinner -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner-container">
+      <div class="spinner"></div>
+      <p>Cargando eventos...</p>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error && !loading" class="error-state">
+    <p>❌ {{ error }}</p>
+    <button (click)="cargarEventos()" class="retry-button">🔄 Reintentar</button>
+  </div>
+
+  <!-- Eventos -->
+  <div *ngIf="!loading && !error" class="eventos-items">
+    <div *ngFor="let evento of eventos; trackBy: trackByEvento" class="evento-item"
+      [class.no-image]="!hasValidImage(evento) || evento._imageError">
+
+      <!-- Solo mostrar imagen si existe, es válida y no ha fallado -->
+      <div class="evento-image" *ngIf="hasValidImage(evento) && !evento._imageError">
+        <img [src]="getImageSrc(evento)" [alt]="evento.titulo" (error)="onImageError($event, evento)"
+          (load)="onImageLoad(evento)" loading="lazy">
+      </div>
+
+      <!-- Placeholder visual cuando no hay imagen o falló la carga -->
+      <div class="evento-placeholder" *ngIf="!hasValidImage(evento) || evento._imageError">
+        <div class="placeholder-content">
+          <div class="placeholder-icon">🎉</div>
+          <span class="placeholder-text">{{ evento.titulo | slice:0:30 }}...</span>
+        </div>
+      </div>
+
+      <div class="evento-content">
+        <h3>{{ evento.titulo }}</h3>
+        <div class="evento-date">{{ formatearFecha(evento.fecha_evento_inicio) }}</div>
+        <div class="evento-location" *ngIf="evento.lugar">📍 {{ evento.lugar }}</div>
+        <p>{{ truncarTexto(evento.cuerpo) }}</p>
+        <div class="evento-precio" *ngIf="evento.precio">💰 {{ evento.precio }}€</div>
+
+        <div class="evento-footer">
+          <a href="#" class="read-more">Ver detalles</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje si no hay eventos -->
+    <div *ngIf="eventos.length === 0" class="no-eventos">
+      <p>📅 No hay eventos programados en este momento.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="home-container">
+  <div class="logo-section" [style.opacity]="1 - scrollProgress">
+    <app-logo></app-logo>
+  </div>
+
+  <div class="scroll-trigger" [style.height]="'200vh'"></div>
+
+  <div class="content-section"
+       [style.transform]="'translateY(' + (100 - scrollProgress * 100) + 'vh)'">
+
+    <!-- Sección de Noticias -->
+    <section id="noticias" class="content-section-item">
+      <app-news></app-news>
+    </section>
+
+    <!-- Sección de Eventos -->
+    <section id="eventos" class="content-section-item">
+      <app-eventos></app-eventos>
+    </section>
+
+    <!-- Sección de Tienda -->
+    <section id="tienda" class="content-section-item">
+      <app-tienda></app-tienda>
+    </section>
+  </div>
+</div>

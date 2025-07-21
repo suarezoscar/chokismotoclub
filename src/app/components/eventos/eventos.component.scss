@@ -1,0 +1,429 @@
+.eventos-container {
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  color: #fff;
+  
+  // Responsive padding
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 2rem 1rem;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 4rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: bold;
+    color: #fff;
+    font-family: "Black Ops One", sans-serif;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 1.5rem;
+    letter-spacing: 2px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, #ff6b35, #f8a100);
+      border-radius: 2px;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, #ff6b35, #f8a100);
+      border-radius: 1px;
+    }
+  }
+
+  // Estados de carga y error
+  .loading-state, .error-state, .no-eventos {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #ccc;
+    font-size: 1.2rem;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+  }
+
+  .loading-state {
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 107, 53, 0.2);
+      border-top: 4px solid #ff6b35;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    p {
+      color: #ff6b35;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .error-state {
+    color: #ff6b6b;
+    
+    .retry-button {
+      margin-top: 1.5rem;
+      padding: 0.75rem 2rem;
+      background: linear-gradient(135deg, #ff6b35 0%, #f8a100 100%);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.6);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .eventos-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem;
+    justify-items: center;
+    align-items: start;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    // Responsive breakpoints
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      max-width: 500px;
+    }
+    
+    @media (max-width: 480px) {
+      gap: 1.5rem;
+      max-width: 100%;
+    }
+
+    // Para pantallas muy grandes, limitar a 3 columnas máximo
+    @media (min-width: 1400px) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3.5rem;
+    }
+
+    .evento-item {
+      width: 100%;
+      max-width: 380px;
+      padding: 0;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #1e1e1e, #0a0a0a);
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      position: relative;
+      backdrop-filter: blur(10px);
+
+      &:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 
+          0 40px 80px rgba(0, 0, 0, 0.7),
+          0 0 0 2px rgba(255, 107, 53, 0.4),
+          0 0 30px rgba(255, 107, 53, 0.2);
+      }
+
+      // Efecto de brillo sutil
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s ease;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      &:hover::before {
+        left: 100%;
+      }
+
+      .evento-image {
+        position: relative;
+        overflow: hidden;
+        height: 220px;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 50%;
+          background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+          pointer-events: none;
+        }
+      }
+
+      &:hover .evento-image img {
+        transform: scale(1.05);
+      }
+
+      .evento-content {
+        padding: 1.5rem;
+      }
+
+      h3 {
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .evento-date {
+        color: #ff6b35;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        &::before {
+          content: '📅';
+          font-size: 0.8rem;
+        }
+      }
+
+      .evento-location {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #ccc;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+
+        &::before {
+          content: '📍';
+          font-size: 0.8rem;
+        }
+      }
+
+      p {
+        color: #ccc;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .evento-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1rem;
+        
+        .read-more {
+          color: #ff6b35;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 0.9rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          transition: all 0.3s ease;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          
+          &:hover {
+            color: #fff;
+            transform: translateX(5px);
+          }
+
+          &::after {
+            content: '→';
+            transition: transform 0.3s ease;
+          }
+
+          &:hover::after {
+            transform: translateX(3px);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animaciones de entrada
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.evento-item {
+  animation: fadeInUp 0.6s ease forwards;
+  
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.3s; }
+  &:nth-child(4) { animation-delay: 0.4s; }
+  &:nth-child(5) { animation-delay: 0.5s; }
+  &:nth-child(6) { animation-delay: 0.6s; }
+}
+
+// Responsive adjustments adicionales
+@media (max-width: 768px) {
+  .eventos-container {
+    .eventos-items {
+      .evento-item {
+        max-width: none;
+        
+        .evento-image {
+          height: 200px;
+        }
+        
+        .evento-content {
+          padding: 1.25rem;
+        }
+        
+        h3 {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .eventos-container {
+    .eventos-items {
+      .evento-item {
+        .evento-image {
+          height: 180px;
+        }
+        
+        .evento-content {
+          padding: 1rem;
+        }
+      }
+    }
+  }
+}
+
+// Animación del spinner
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Estilos adicionales para eventos
+.evento-location {
+  color: #ff6b35;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.evento-precio {
+  color: #4ecdc4;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.evento-placeholder {
+  height: 220px;
+  background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  
+  .placeholder-content {
+    text-align: center;
+    
+    .placeholder-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+    }
+    
+    .placeholder-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<div class="top-bar" [class.visible]="visible">
+  <div class="small-logo-container" (click)="scrollToTop()">
+    <img
+      src="assets/images/no_letters_logo.webp"
+      alt="logo club chokismotoclub"
+      class="small-logo"
+    />
+    <span>CHOKIS MOTOCLUB</span>
+  </div>
+
+  <!-- Navegación de secciones -->
+  <nav class="section-nav" *ngIf="visible">
+    <a href="#noticias" class="nav-link">
+      <span class="nav-icon">📰</span>
+      <span class="nav-text">Noticias</span>
+    </a>
+    <a href="#eventos" class="nav-link">
+      <span class="nav-icon">🎉</span>
+      <span class="nav-text">Eventos</span>
+    </a>
+    <a href="#tienda" class="nav-link">
+      <span class="nav-icon">🛒</span>
+      <span class="nav-text">Tienda</span>
+    </a>
+  </nav>
+
+  <div class="social-icons">
+    <a class="icon-hover" href="http://instagram.com/_u/chokismotoclub/">
+      <img
+        alt="icono instagram"
+        width="30px"
+        src="assets/icons/instagram.svg"
+      />
+    </a>
+
+    <a class="icon-hover" href="https://app.rockr.io/u/669246376e28f200111a4bf1">
+      <div class="rockr-icon">
+        <img alt="icono rockr" width="20px" src="assets/icons/rockr.svg" />
+      </div>
+    </a>
+  </div>
+</div>
