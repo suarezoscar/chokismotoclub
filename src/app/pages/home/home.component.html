@@ -5,9 +5,22 @@
 
   <div class="scroll-trigger" [style.height]="'200vh'"></div>
 
-  <div class="news-section"
+  <div class="content-section"
        [style.transform]="'translateY(' + (100 - scrollProgress * 100) + 'vh)'">
-    <app-news></app-news>
-    <app-eventos></app-eventos>
+
+    <!-- Sección de Noticias -->
+    <section id="noticias" class="content-section-item">
+      <app-news></app-news>
+    </section>
+
+    <!-- Sección de Eventos -->
+    <section id="eventos" class="content-section-item">
+      <app-eventos></app-eventos>
+    </section>
+
+    <!-- Sección de Tienda -->
+    <section id="tienda" class="content-section-item">
+      <app-tienda></app-tienda>
+    </section>
   </div>
 </div>

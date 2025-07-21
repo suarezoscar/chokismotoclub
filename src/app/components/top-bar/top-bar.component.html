@@ -1,5 +1,5 @@
 <div class="top-bar" [class.visible]="visible">
-  <div class="small-logo-container">
+  <div class="small-logo-container" (click)="scrollToTop()">
     <img
       src="assets/images/no_letters_logo.webp"
       alt="logo club chokismotoclub"
@@ -7,6 +7,22 @@
     />
     <span>CHOKIS MOTOCLUB</span>
   </div>
+
+  <!-- Navegación de secciones -->
+  <nav class="section-nav" *ngIf="visible">
+    <a href="#noticias" class="nav-link">
+      <span class="nav-icon">📰</span>
+      <span class="nav-text">Noticias</span>
+    </a>
+    <a href="#eventos" class="nav-link">
+      <span class="nav-icon">🎉</span>
+      <span class="nav-text">Eventos</span>
+    </a>
+    <a href="#tienda" class="nav-link">
+      <span class="nav-icon">🛒</span>
+      <span class="nav-text">Tienda</span>
+    </a>
+  </nav>
 
   <div class="social-icons">
     <a class="icon-hover" href="http://instagram.com/_u/chokismotoclub/">

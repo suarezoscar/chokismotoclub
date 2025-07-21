@@ -1,18 +1,53 @@
 <div class="news-container">
   <h2>Últimas Noticias</h2>
 
-  <div class="news-items">
-    <div class="news-item">
-      <div class="news-image">
-        <img src="assets/images/news-placeholder.jpg" alt="Noticia motoclub">
+  <!-- Loading state with spinner -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner-container">
+      <div class="spinner"></div>
+      <p>Cargando noticias...</p>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error && !loading" class="error-state">
+    <p>❌ {{ error }}</p>
+    <button (click)="cargarNoticias()" class="retry-button">🔄 Reintentar</button>
+  </div>
+
+  <!-- Noticias -->
+  <div *ngIf="!loading && !error" class="news-items">
+    <div *ngFor="let noticia of noticias; trackBy: trackByNoticia" class="news-item"
+      [class.no-image]="!hasValidImage(noticia) || noticia._imageError">
+
+      <!-- Solo mostrar imagen si existe, es válida y no ha fallado -->
+      <div class="news-image" *ngIf="hasValidImage(noticia) && !noticia._imageError">
+        <img [src]="getImageSrc(noticia)" [alt]="noticia.titulo" (error)="onImageError($event, noticia)"
+          (load)="onImageLoad(noticia)" loading="lazy">
       </div>
-      <h3>Próxima ruta: Sierra de O Courel</h3>
-      <div class="news-date">15 Mayo, 2024</div>
-      <p>Únete a nuestra próxima ruta por la espectacular Sierra de O Courel. Recorreremos los mejores paisajes de
-        montaña de Galicia en un recorrido de 200km.</p>
-      <div class="news-footer">
-        <a href="#" class="read-more">Leer más →</a>
+
+      <!-- Placeholder visual cuando no hay imagen o falló la carga -->
+      <div class="news-placeholder" *ngIf="!hasValidImage(noticia) || noticia._imageError">
+        <div class="placeholder-content">
+          <div class="placeholder-icon">📰</div>
+          <span class="placeholder-text">{{ noticia.titulo | slice:0:30 }}...</span>
+        </div>
       </div>
+
+      <div class="news-content">
+        <h3>{{ noticia.titulo }}</h3>
+        <div class="news-date">{{ formatearFecha(noticia.fecha_publicacion) }}</div>
+        <p>{{ truncarTexto(noticia.cuerpo) }}</p>
+
+        <div class="news-footer">
+          <a href="#" class="read-more">Leer más</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje si no hay noticias -->
+    <div *ngIf="noticias.length === 0" class="no-news">
+      <p>📭 No hay noticias disponibles en este momento.</p>
     </div>
   </div>
 </div>

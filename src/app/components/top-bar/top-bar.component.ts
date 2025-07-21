@@ -10,4 +10,11 @@ import { CommonModule } from '@angular/common';
 })
 export class TopBarComponent {
   @Input() visible: boolean = false;
+
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 }
