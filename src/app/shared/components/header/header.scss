@@ -41,15 +41,23 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    animation: fadeInUp 1s ease-out;
+    /* Entrance animation */
 
     img {
         border-radius: 50%;
         border: 2px solid var(--color-primary);
+        transition: transform 0.5s ease;
+
+        &:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
     }
 
     .brand-name {
         font-size: 1.5rem;
         font-weight: 700;
+        font-family: var(--font-brand);
         color: var(--color-primary);
         text-transform: uppercase;
         letter-spacing: 1px;

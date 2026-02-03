@@ -141,3 +141,11 @@
         transform: translateY(0);
     }
 }
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    font-weight: 300;
+}
