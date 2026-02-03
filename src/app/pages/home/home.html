@@ -1,0 +1,57 @@
+<section id="hero" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <img src="assets/logo.jpg" alt="Logo Chokis" class="hero-logo">
+        <h1>Chokis Motoclub</h1>
+        <p class="subtitle">O Carballiño</p>
+        <a routerLink="." fragment="news" class="scroll-down" aria-label="Ir a noticias">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+            </svg>
+        </a>
+    </div>
+</section>
+
+<section id="news" class="section">
+    <div class="container">
+        <h2 class="section-title">Últimas Noticias & Eventos</h2>
+
+        @if (newsItems() === undefined) {
+        <div class="grid">
+            <app-skeleton /><app-skeleton /><app-skeleton />
+        </div>
+        } @else {
+        <div class="grid" [@listAnimation]="newsItems()?.length">
+            @for (item of newsItems(); track item.id) {
+            <app-card [newsItem]="item" />
+            }
+        </div>
+        @if (newsItems()?.length === 0) {
+        <p class="empty-state">No hay noticias publicadas.</p>
+        }
+        }
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="merch" class="section">
+    <div class="container">
+        <h2 class="section-title">Merchandising Oficial</h2>
+        @if (merchItems() === undefined) {
+        <div class="grid">
+            <app-skeleton /><app-skeleton /><app-skeleton />
+        </div>
+        } @else {
+        <div class="grid" [@listAnimation]="merchItems()?.length">
+            @for (item of merchItems(); track item.id) {
+            <app-card [merchItem]="item" />
+            }
+        </div>
+        @if (merchItems()?.length === 0) {
+        <p class="empty-state">Próximamente nuevos productos.</p>
+        }
+        }
+    </div>
+</section>

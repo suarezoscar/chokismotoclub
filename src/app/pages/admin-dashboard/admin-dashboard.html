@@ -1,0 +1,142 @@
+<div class="admin-dashboard">
+    <div class="sidebar">
+        <h3>Admin Panel</h3>
+        <nav>
+            <button (click)="activeTab.set('news')" [class.active]="activeTab() === 'news'">Noticias / Eventos</button>
+            <button (click)="activeTab.set('merch')" [class.active]="activeTab() === 'merch'">Merchandising</button>
+            <button (click)="logout()" class="logout">Cerrar Sesión</button>
+        </nav>
+    </div>
+
+    <div class="content">
+        @if (activeTab() === 'news') {
+        <div class="panel">
+            <h2>{{ editingNewsId() ? 'Editar Noticia' : 'Nueva Noticia' }}</h2>
+
+            <form [formGroup]="newsForm" (ngSubmit)="saveNews()" class="admin-form">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input formControlName="title" type="text" placeholder="Título de la noticia">
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <select formControlName="type">
+                        <option value="news">Noticia</option>
+                        <option value="event">Evento</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha y Hora</label>
+                    <input formControlName="date" type="datetime-local">
+                </div>
+
+                <div class="form-group">
+                    <label>Contenido</label>
+                    <textarea formControlName="content" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Imagen</label>
+                    <input type="file" (change)="uploadFile($event, 'news')" accept="image/*">
+                    <input formControlName="imageUrl" type="hidden">
+                    @if (newsForm.get('imageUrl')?.value) {
+                    <p class="success">Imagen presente</p>
+                    <img [src]="newsForm.get('imageUrl')?.value" alt="Preview" height="100">
+                    }
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" [disabled]="newsForm.invalid || isUploading()" class="btn-primary">
+                        {{ isUploading() ? 'Subiendo...' : (editingNewsId() ? 'Actualizar' : 'Publicar') }}
+                    </button>
+                    @if (editingNewsId()) {
+                    <button type="button" (click)="cancelEditNews()" class="btn-secondary">Cancelar</button>
+                    }
+                </div>
+            </form>
+
+            <div class="list-container">
+                <h3>Noticias Publicadas</h3>
+                <div class="item-list">
+                    @for (item of newsList(); track item.id) {
+                    <div class="list-item">
+                        <div class="info">
+                            <span class="type">{{ item.type }}</span>
+                            <h4>{{ item.title }}</h4>
+                            <span class="date">{{ (item.date.toDate ? item.date.toDate() : item.date) | date:'dd/MM/yyyy
+                                HH:mm' }}</span>
+                        </div>
+                        <div class="actions">
+                            <button (click)="editNews(item)" class="btn-icon">✎</button>
+                            <button (click)="deleteNews(item.id)" class="btn-icon delete">🗑</button>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+
+        @if (activeTab() === 'merch') {
+        <div class="panel">
+            <h2>{{ editingMerchId() ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+
+            <form [formGroup]="merchForm" (ngSubmit)="saveMerch()" class="admin-form">
+                <div class="form-group">
+                    <label>Nombre Producto</label>
+                    <input formControlName="name" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea formControlName="description" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Precio (€)</label>
+                    <input formControlName="price" type="number" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Imagen</label>
+                    <input type="file" (change)="uploadFile($event, 'merch')" accept="image/*">
+                    <input formControlName="imageUrl" type="hidden">
+                    @if (merchForm.get('imageUrl')?.value) {
+                    <p class="success">Imagen presente</p>
+                    <img [src]="merchForm.get('imageUrl')?.value" alt="Preview" height="100">
+                    }
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" [disabled]="merchForm.invalid || isUploading()" class="btn-primary">
+                        {{ isUploading() ? 'Subiendo...' : (editingMerchId() ? 'Actualizar' : 'Añadir') }}
+                    </button>
+                    @if (editingMerchId()) {
+                    <button type="button" (click)="cancelEditMerch()" class="btn-secondary">Cancelar</button>
+                    }
+                </div>
+            </form>
+
+            <div class="list-container">
+                <h3>Productos en Catálogo</h3>
+                <div class="item-list">
+                    @for (item of merchList(); track item.id) {
+                    <div class="list-item">
+                        <div class="info">
+                            <h4>{{ item.name }}</h4>
+                            <span class="price">{{ item.price }}€</span>
+                        </div>
+                        <div class="actions">
+                            <button (click)="editMerch(item)" class="btn-icon">✎</button>
+                            <button (click)="deleteMerch(item.id)" class="btn-icon delete">🗑</button>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>

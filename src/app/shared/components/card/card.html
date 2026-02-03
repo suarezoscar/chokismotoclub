@@ -1,0 +1,29 @@
+<div class="card">
+    @if (newsItem()) {
+    <div class="card-image"
+        [style.background-image]="'url(' + (newsItem()!.imageUrl || 'assets/placeholder.jpg') + ')'">
+        <span class="badge">{{ newsItem()!.type === 'event' ? 'COMPETICIÓN' : 'NOTICIA' }}</span>
+    </div>
+    <div class="card-content">
+        <span class="date">{{ (newsItem()!.date.toDate ? newsItem()!.date.toDate() : newsItem()!.date) | date:'EEEE
+            dd/MM/yyyy HH:mm' | titlecase }}</span>
+        <h3>{{ newsItem()!.title }}</h3>
+        <p>{{ newsItem()!.content }}</p>
+
+    </div>
+    }
+
+    @if (merchItem()) {
+    <div class="card-image merch"
+        [style.background-image]="'url(' + (merchItem()!.imageUrl || 'assets/placeholder.jpg') + ')'">
+    </div>
+    <div class="card-content">
+        <h3>{{ merchItem()!.name }}</h3>
+        <p class="description">{{ merchItem()!.description }}</p>
+        <div class="actions">
+            <span class="price">{{ merchItem()!.price }}€</span>
+            <a href="https://www.instagram.com/chokismotoclub/" target="_blank" class="btn-link">Pedir Info</a>
+        </div>
+    </div>
+    }
+</div>

@@ -1,0 +1,181 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;700&display=swap');
+
+:root {
+  scroll-behavior: smooth;
+
+  /* Brand / Web Color Palette */
+  --color-bg-main: #0a0a0a;
+  /* Deep Black */
+  --color-bg-surface: #141414;
+  /* Slightly Lighter */
+  --color-bg-elevated: #1f1f1f;
+  /* Cards/Modals */
+
+  --color-primary: #c68b59;
+  /* Premium Copper */
+  --color-primary-dim: #8b5a3c;
+  /* Muted Copper */
+
+  --color-accent: #a12e44;
+  /* Deep Burgundy */
+
+  --color-text-main: #ffffff;
+  /* Pure White */
+  --color-text-secondary: #a3a3a3;
+  /* Muted Grey */
+  --color-text-primary: #c68b59;
+  /* Copper Text */
+
+  --color-border: #333333;
+  --color-border-hover: #555555;
+
+  /* Typography */
+  --font-display: 'Oswald', sans-serif;
+  /* Headings */
+  --font-body: 'Inter', sans-serif;
+  /* Body text */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Typography Defaults */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 0;
+  letter-spacing: 0.05em;
+}
+
+h1 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  font-weight: 300;
+  color: var(--color-text-secondary);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+/* Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section {
+  padding: 80px 0;
+}
+
+.section-title {
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 60px;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-primary);
+    margin: 10px auto 0;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.btn-primary,
+.btn-cta {
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: #000;
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 12px 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+
+  &:hover {
+    background-color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(198, 139, 89, 0.3);
+  }
+}
+
+.btn-outline {
+  padding: 10px 25px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-main);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-dim);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}

@@ -1,0 +1,19 @@
+<header class="header" [class.scrolled]="isScrolled">
+  <div class="container">
+    <div class="logo">
+      <img src="assets/logo.jpg" alt="Chokis Motoclub Logo" height="60">
+      <span class="brand-name">Chokis Motoclub</span>
+    </div>
+    <nav class="nav">
+      <ul>
+        <li><a routerLink="/" (click)="uiService.setActiveSection('hero')"
+            [class.active]="uiService.activeSection() === 'hero' || uiService.activeSection() === ''">Inicio</a></li>
+        <li><a routerLink="/" fragment="news" (click)="uiService.setActiveSection('news')"
+            [class.active]="uiService.activeSection() === 'news'">Noticias</a></li>
+        <li><a routerLink="/" fragment="merch" (click)="uiService.setActiveSection('merch')"
+            [class.active]="uiService.activeSection() === 'merch'">Merchandising</a></li>
+        <!-- Admin link hidden or subtle -->
+      </ul>
+    </nav>
+  </div>
+</header>
