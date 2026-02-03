@@ -9,6 +9,13 @@
     "test": "ng test",
     "serve:ssr:chokismotoclub": "node dist/chokismotoclub/server/server.mjs"
   },
+  "overrides": {
+    "@angular/common": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/platform-browser": "^21.1.0",
+    "@angular/forms": "^21.1.0",
+    "@angular/router": "^21.1.0"
+  },
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,
