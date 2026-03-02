@@ -13,13 +13,16 @@ export class SafeHtmlPipe implements PipeTransform {
 
     // In case the editor or database escaped the HTML string
     // e.g. '&lt;p&gt;' instead of '<p>'
+    // Also replace &nbsp; with regular spaces — Quill inserts these between words
+    // which prevents natural line wrapping (non-breaking spaces can never wrap).
     let decoded = value
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&amp;/g, '&')
       .replace(/&quot;/g, '"')
       .replace(/&#39;/g, "'")
-      .replace(/&#x2F;/g, "/");
+      .replace(/&#x2F;/g, "/")
+      .replace(/&nbsp;/g, ' ');
 
     return this.sanitizer.bypassSecurityTrustHtml(decoded);
   }

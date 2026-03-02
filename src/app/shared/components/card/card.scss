@@ -131,6 +131,12 @@
             max-height: 120px;
             overflow: hidden;
             transition: max-height 0.5s ease;
+            min-width: 0;
+
+            &>div {
+                width: 100%;
+                min-width: 0;
+            }
 
             &::after {
                 content: '';
