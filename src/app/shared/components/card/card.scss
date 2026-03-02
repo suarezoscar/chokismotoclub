@@ -21,6 +21,10 @@
             &::after {
                 opacity: 0;
             }
+
+            &.has-image {
+                cursor: pointer;
+            }
         }
 
         .btn-link {
@@ -96,16 +100,93 @@
             font-family: var(--font-display);
         }
 
-        p {
-            color: var(--color-text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            flex-grow: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+        .text-content {
+            margin-bottom: 1.5rem;
+            position: relative;
+
+            p {
+                color: var(--color-text-secondary);
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin: 0;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                white-space: pre-wrap;
+                transition: all 0.3s ease;
+            }
+
+            &.expanded p {
+                -webkit-line-clamp: unset;
+                display: block;
+                overflow: visible;
+            }
+        }
+
+        .news-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: auto;
+
+            .expand-btn {
+                background: transparent;
+                border: none;
+                color: var(--color-primary);
+                font-family: var(--font-display);
+                font-weight: 600;
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                padding: 0;
+                align-self: flex-start;
+                transition: opacity 0.3s ease;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+
+                .arrow {
+                    transition: transform 0.3s ease;
+
+                    &.up {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            .maps-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background-color: rgba(255, 255, 255, 0.05);
+                border: 1px solid var(--color-border);
+                color: var(--color-text-main);
+                padding: 10px 16px;
+                border-radius: 6px;
+                text-decoration: none;
+                font-family: var(--font-display);
+                font-weight: 600;
+                font-size: 0.85rem;
+                letter-spacing: 0.05em;
+                transition: all 0.3s ease;
+                max-width: fit-content;
+
+                .icon {
+                    font-size: 1.1rem;
+                }
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    border-color: var(--color-text-secondary);
+                    transform: translateY(-2px);
+                }
+            }
         }
 
         .actions {
@@ -148,5 +229,134 @@
                 }
             }
         }
+    }
+}
+
+.image-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 10, 10, 0.82);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    backdrop-filter: blur(20px) saturate(120%);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
+    cursor: default;
+    animation: fadeIn 0.4s ease forwards;
+
+    .drag-handle {
+        display: none;
+        width: 40px;
+        height: 4px;
+        background-color: rgba(255, 255, 255, 0.4);
+        border-radius: 4px;
+        position: absolute;
+        top: 15px;
+        z-index: 10;
+
+        @media (max-width: 768px) {
+            display: block;
+        }
+    }
+
+    img {
+        max-width: 90vw;
+        max-height: 85vh;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        object-fit: contain;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        animation: zoomIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        transform: scale(0.95);
+        opacity: 0;
+        transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+
+        &.dragging {
+            transition: none;
+            animation: none;
+            opacity: 1;
+            /* Reset logic opacity to template inline */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            max-width: 100vw;
+            width: 100vw;
+            max-height: 100vh;
+            border-radius: 0;
+            border: none;
+            background-color: transparent;
+        }
+    }
+
+    .close-overlay {
+        position: absolute;
+        top: 30px;
+        right: 35px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        z-index: 10;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2.5px;
+        }
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 }

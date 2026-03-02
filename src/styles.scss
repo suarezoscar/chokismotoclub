@@ -52,6 +52,10 @@
   /* Body text */
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -62,6 +66,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  width: 100%;
 }
 
 /* Typography Defaults */
@@ -125,10 +130,8 @@ a {
 
 .section-title {
   text-align: center;
-  position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
+  display: block;
+  width: 100%;
   margin-bottom: 60px;
 
   &::after {
@@ -137,13 +140,13 @@ a {
     width: 60px;
     height: 3px;
     background-color: var(--color-primary);
-    margin: 10px auto 0;
+    margin: 15px auto 0;
   }
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: 30px;
 }
 

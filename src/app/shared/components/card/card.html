@@ -1,15 +1,33 @@
 <div class="card">
     @if (newsItem()) {
-    <div class="card-image"
-        [style.background-image]="'url(' + (newsItem()!.imageUrl || 'assets/placeholder.jpg') + ')'">
-        <span class="badge">{{ newsItem()!.type === 'event' ? 'COMPETICIÓN' : 'NOTICIA' }}</span>
+    <div class="card-image" [class.has-image]="newsItem()!.imageUrl"
+        [style.background-image]="'url(' + (newsItem()!.imageUrl || 'assets/placeholder.jpg') + ')'"
+        (click)="newsItem()!.imageUrl ? toggleImageExpand($event) : null">
+        <span class="badge">{{ newsItem()!.type === 'event' ? 'EVENTO' : 'NOTICIA' }}</span>
     </div>
     <div class="card-content">
         <span class="date">{{ (newsItem()!.date.toDate ? newsItem()!.date.toDate() : newsItem()!.date) | date:'EEEE
             dd/MM/yyyy HH:mm' | titlecase }}</span>
         <h3>{{ newsItem()!.title }}</h3>
-        <p>{{ newsItem()!.content }}</p>
 
+        <div class="text-content" [class.expanded]="isExpanded()">
+            <p>{{ newsItem()!.content }}</p>
+        </div>
+
+        <div class="news-actions">
+            @if (newsItem()!.content && newsItem()!.content.length > 150) {
+            <button class="expand-btn" (click)="toggleExpand()">
+                {{ isExpanded() ? 'Leer menos' : 'Leer más' }}
+                <span class="arrow" [class.up]="isExpanded()">↓</span>
+            </button>
+            }
+
+            @if (newsItem()!.mapsUrl) {
+            <a [href]="newsItem()!.mapsUrl" target="_blank" class="maps-btn">
+                <span class="icon">📍</span> Lugar del evento
+            </a>
+            }
+        </div>
     </div>
     }
 
@@ -27,3 +45,21 @@
     </div>
     }
 </div>
+
+@if (newsItem()?.imageUrl && isImageExpanded()) {
+<div class="image-overlay" (click)="toggleImageExpand($event)">
+    <div class="drag-handle"></div>
+    <button class="close-overlay" (click)="toggleImageExpand($event)" title="Cerrar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </button>
+    <img [src]="newsItem()!.imageUrl" alt="Ampliación" (click)="$event.stopPropagation()"
+        (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd()"
+        [style.transform]="(isDragging() || currentTouchY() !== 0) ? 'translateY(' + currentTouchY() + 'px)' : null"
+        [style.opacity]="(isDragging() || currentTouchY() !== 0) ? 1 - (currentTouchY() / -300) : null"
+        [class.dragging]="isDragging()">
+</div>
+}

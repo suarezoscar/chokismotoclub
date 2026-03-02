@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, effect, PLATFORM_ID, ElementRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { UiService } from '../../core/services/ui';
 import { Card } from '../../shared/components/card/card';
@@ -30,10 +30,28 @@ export class Home implements OnInit {
   private titleService = inject(Title);
   private metaService = inject(Meta);
   private dataService = inject(DataService);
+  private uiService = inject(UiService);
+  private platformId = inject(PLATFORM_ID);
+  private el = inject(ElementRef);
 
   // Real Data from Firestore (undefined = loading)
   newsItems = toSignal(this.dataService.getNews());
   merchItems = toSignal(this.dataService.getMerch());
+
+  private animObserver: IntersectionObserver | null = null;
+  private scrollObserver: IntersectionObserver | null = null;
+
+  constructor() {
+    effect(() => {
+      // Re-run observer setup when data signals change
+      const news = this.newsItems();
+      const merch = this.merchItems();
+
+      if (isPlatformBrowser(this.platformId)) {
+        setTimeout(() => this.setupAnimObserver(), 50); // slight delay to allow DOM to render
+      }
+    });
+  }
 
   ngOnInit() {
     this.titleService.setTitle('Chokis Motoclub | O Carballiño');
@@ -43,29 +61,52 @@ export class Home implements OnInit {
     this.metaService.updateTag({ property: 'og:description', content: 'Únete a nuestras rutas y eventos. Pasión por las dos ruedas en Galicia.' });
     this.metaService.updateTag({ property: 'og:image', content: 'assets/logo.jpg' });
 
-    this.setupScrollSpy();
+    if (isPlatformBrowser(this.platformId)) {
+      this.setupSectionSpy();
+    }
   }
 
-  private uiService = inject(UiService);
-  private platformId = inject(PLATFORM_ID);
+  private setupAnimObserver() {
+    if (this.animObserver) {
+      this.animObserver.disconnect();
+    }
 
-  private setupScrollSpy() {
-    if (!isPlatformBrowser(this.platformId)) return;
+    this.animObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -100px 0px',
+      threshold: 0.1
+    });
 
-    const observer = new IntersectionObserver((entries) => {
+    const animatedElements = this.el.nativeElement.querySelectorAll('.reveal-on-scroll');
+    animatedElements.forEach((el: Element) => this.animObserver!.observe(el));
+  }
+
+  private setupSectionSpy() {
+    if (this.scrollObserver) {
+      this.scrollObserver.disconnect();
+    }
+
+    this.scrollObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           this.uiService.setActiveSection(entry.target.id);
         }
       });
     }, {
-      rootMargin: '-50% 0px -50% 0px', // Trigger when element hits middle of screen
+      rootMargin: '-50% 0px -50% 0px',
       threshold: 0
     });
 
     setTimeout(() => {
-      const sections = document.querySelectorAll('section');
-      sections.forEach(sec => observer.observe(sec));
+      const sections = this.el.nativeElement.querySelectorAll('section');
+      sections.forEach((sec: Element) => this.scrollObserver!.observe(sec));
     }, 100);
   }
 }

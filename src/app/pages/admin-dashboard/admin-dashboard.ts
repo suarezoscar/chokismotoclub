@@ -34,7 +34,8 @@ export class AdminDashboard {
     content: ['', Validators.required],
     type: ['news', Validators.required],
     date: [new Date().toISOString().slice(0, 16), Validators.required],
-    imageUrl: ['']
+    imageUrl: [''],
+    mapsUrl: ['']
   });
   merchForm = this.fb.group({
     name: ['', Validators.required],
@@ -82,7 +83,8 @@ export class AdminDashboard {
       content: val.content!,
       type: val.type as 'news' | 'event',
       date: new Date(val.date!),
-      imageUrl: val.imageUrl || ''
+      imageUrl: val.imageUrl || '',
+      mapsUrl: val.mapsUrl || ''
     };
 
     if (this.editingNewsId()) {
@@ -105,7 +107,8 @@ export class AdminDashboard {
       content: item.content,
       type: item.type,
       date: item.date instanceof Date ? item.date.toISOString().slice(0, 16) : new Date(item.date.seconds * 1000).toISOString().slice(0, 16),
-      imageUrl: item.imageUrl
+      imageUrl: item.imageUrl,
+      mapsUrl: item.mapsUrl
     });
   }
 

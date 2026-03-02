@@ -45,17 +45,24 @@
             }
         }
 
-        h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 700;
+        .hero-title {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.04em;
             margin: 0;
-            color: var(--color-text-main);
+            color: #ffffff;
             line-height: 0.9;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            font-family: var(--font-display);
 
             span {
                 color: var(--color-primary);
+                font-weight: 300;
+                display: block;
+                font-size: clamp(2.5rem, 6vw, 5rem);
+                letter-spacing: 0.05em;
+                margin-top: 0.2rem;
             }
         }
 
@@ -148,4 +155,17 @@
     font-size: 1.2rem;
     color: var(--color-text-secondary);
     font-weight: 300;
+}
+
+/* Scroll Reveal Animations */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+    will-change: opacity, transform;
+
+    &.in-view {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

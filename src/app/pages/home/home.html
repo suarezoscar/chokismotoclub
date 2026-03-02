@@ -2,7 +2,7 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <img src="assets/logo.jpg" alt="Logo Chokis" class="hero-logo">
-        <h1>Chokis Motoclub</h1>
+        <h1 class="hero-title">Chokis <span>Motoclub</span></h1>
         <p class="subtitle">O Carballiño</p>
         <a routerLink="." fragment="news" class="scroll-down" aria-label="Ir a noticias">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -15,14 +15,14 @@
 
 <section id="news" class="section">
     <div class="container">
-        <h2 class="section-title">Últimas Noticias & Eventos</h2>
+        <h2 class="section-title reveal-on-scroll">Últimas Noticias & Eventos</h2>
 
         @if (newsItems() === undefined) {
-        <div class="grid">
+        <div class="grid reveal-on-scroll">
             <app-skeleton /><app-skeleton /><app-skeleton />
         </div>
         } @else {
-        <div class="grid" [@listAnimation]="newsItems()?.length">
+        <div class="grid reveal-on-scroll" [@listAnimation]="newsItems()?.length">
             @for (item of newsItems(); track item.id) {
             <app-card [newsItem]="item" />
             }
@@ -38,13 +38,13 @@
 
 <section id="merch" class="section">
     <div class="container">
-        <h2 class="section-title">Merchandising Oficial</h2>
+        <h2 class="section-title reveal-on-scroll">Merchandising Oficial</h2>
         @if (merchItems() === undefined) {
-        <div class="grid">
+        <div class="grid reveal-on-scroll">
             <app-skeleton /><app-skeleton /><app-skeleton />
         </div>
         } @else {
-        <div class="grid" [@listAnimation]="merchItems()?.length">
+        <div class="grid reveal-on-scroll" [@listAnimation]="merchItems()?.length">
             @for (item of merchItems(); track item.id) {
             <app-card [merchItem]="item" />
             }
