@@ -1,8 +1,11 @@
 <div class="card">
     @if (newsItem()) {
     <div class="card-image" [class.has-image]="newsItem()!.imageUrl"
-        [style.background-image]="'url(' + (newsItem()!.imageUrl || 'assets/placeholder.jpg') + ')'"
         (click)="newsItem()!.imageUrl ? toggleImageExpand($event) : null">
+        <div class="blur-bg"
+            [style.background-image]="'url(' + (newsItem()!.imageUrl || 'assets/placeholder.jpg') + ')'"></div>
+        <div class="fg-img"
+            [style.background-image]="'url(' + (newsItem()!.imageUrl || 'assets/placeholder.jpg') + ')'"></div>
         <span class="badge">{{ newsItem()!.type === 'event' ? 'EVENTO' : 'NOTICIA' }}</span>
     </div>
     <div class="card-content">
@@ -32,8 +35,11 @@
     }
 
     @if (merchItem()) {
-    <div class="card-image merch"
-        [style.background-image]="'url(' + (merchItem()!.imageUrl || 'assets/placeholder.jpg') + ')'">
+    <div class="card-image merch">
+        <div class="blur-bg"
+            [style.background-image]="'url(' + (merchItem()!.imageUrl || 'assets/placeholder.jpg') + ')'"></div>
+        <div class="fg-img"
+            [style.background-image]="'url(' + (merchItem()!.imageUrl || 'assets/placeholder.jpg') + ')'"></div>
     </div>
     <div class="card-content">
         <h3>{{ merchItem()!.name }}</h3>
