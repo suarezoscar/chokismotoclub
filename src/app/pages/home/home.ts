@@ -109,4 +109,9 @@ export class Home implements OnInit {
       sections.forEach((sec: Element) => this.scrollObserver!.observe(sec));
     }, 100);
   }
+
+  scrollToSection(id: string) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
 }

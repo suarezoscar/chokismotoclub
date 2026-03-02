@@ -1,15 +1,17 @@
 <section id="hero" class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-        <img src="assets/logo.jpg" alt="Logo Chokis" class="hero-logo">
-        <h1 class="hero-title">Chokis <span>Motoclub</span></h1>
-        <p class="subtitle">O Carballiño</p>
-        <a routerLink="/" fragment="news" class="scroll-down" aria-label="Ir a noticias">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
-            </svg>
-        </a>
+        <!--   <img src="assets/logo.jpg" alt="Logo Chokis" class="hero-logo"> -->
+        <div class="bottom-group">
+            <h1 class="hero-title">Chokis <span>Motoclub</span></h1>
+            <p class="subtitle">O Carballiño</p>
+            <button class="scroll-down" (click)="scrollToSection('news')" aria-label="Ir a noticias">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+                </svg>
+            </button>
+        </div>
     </div>
 </section>
 
