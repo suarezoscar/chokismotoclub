@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, effect, PLATFORM_ID, ElementRef } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, effect, PLATFORM_ID, ElementRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { UiService } from '../../core/services/ui';
 import { Card } from '../../shared/components/card/card';
@@ -26,7 +26,7 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
     ])
   ]
 })
-export class Home implements OnInit {
+export class Home implements OnInit, OnDestroy {
   private titleService = inject(Title);
   private metaService = inject(Meta);
   private dataService = inject(DataService);
@@ -39,7 +39,7 @@ export class Home implements OnInit {
   merchItems = toSignal(this.dataService.getMerch());
 
   private animObserver: IntersectionObserver | null = null;
-  private scrollObserver: IntersectionObserver | null = null;
+  private scrollListener: (() => void) | null = null;
 
   constructor() {
     effect(() => {
@@ -89,25 +89,31 @@ export class Home implements OnInit {
   }
 
   private setupSectionSpy() {
-    if (this.scrollObserver) {
-      this.scrollObserver.disconnect();
-    }
+    const sectionIds = ['hero', 'news', 'merch'];
 
-    this.scrollObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.uiService.setActiveSection(entry.target.id);
+    this.scrollListener = () => {
+      const scrollMid = window.scrollY + window.innerHeight * 0.4;
+      let active = 'hero';
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollMid) {
+          active = id;
         }
-      });
-    }, {
-      rootMargin: '-50% 0px -50% 0px',
-      threshold: 0
-    });
+      }
+      this.uiService.setActiveSection(active);
+    };
 
-    setTimeout(() => {
-      const sections = this.el.nativeElement.querySelectorAll('section');
-      sections.forEach((sec: Element) => this.scrollObserver!.observe(sec));
-    }, 100);
+    window.addEventListener('scroll', this.scrollListener, { passive: true });
+    this.scrollListener(); // set initial state
+  }
+
+  ngOnDestroy() {
+    if (this.scrollListener) {
+      window.removeEventListener('scroll', this.scrollListener);
+    }
+    if (this.animObserver) {
+      this.animObserver.disconnect();
+    }
   }
 
   scrollToSection(id: string) {

@@ -1,17 +1,16 @@
 .hero {
-    height: 90vh;
-    min-height: 600px;
+    height: 100dvh;
     background-image: url('/assets/logo.jpg');
-    /* This should ideally be a lifestyle shot of bikes, but we use what we have */
     background-size: cover;
     background-position: center;
-    position: relative;
+    position: sticky;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-attachment: fixed;
     overflow: hidden;
+    z-index: 0;
 
     @media (max-width: 768px) {
         background-attachment: scroll;
@@ -21,7 +20,7 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(circle at center, rgba(10, 10, 10, 0.4) 0%, rgba(10, 10, 10, 0.95) 100%);
+        background: radial-gradient(circle at center, rgba(10, 10, 10, 0.4) 0%, rgba(10, 10, 10, 0.85) 100%);
         z-index: 1;
     }
 
@@ -153,14 +152,24 @@
 .section {
     padding: 100px 0;
     position: relative;
-    background: transparent;
+    z-index: 1;
+    background: var(--color-bg-main);
+}
+
+#news.section {
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            var(--color-bg-main) 220px);
+    padding-top: 140px;
 }
 
 .divider {
+    position: relative;
+    z-index: 1;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+    background-color: var(--color-bg-main);
+    /* Prevent hero from showing through */
     width: 100%;
-    opacity: 0.5;
 }
 
 @keyframes fadeInUp {
