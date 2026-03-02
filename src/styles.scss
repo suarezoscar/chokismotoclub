@@ -67,6 +67,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   width: 100%;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: -20px;
+    width: calc(100vw + 40px);
+    height: calc(100vh + 40px);
+    background-image: url('/assets/logo.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px) brightness(0.25);
+    z-index: -2;
+    pointer-events: none;
+  }
 }
 
 /* Typography Defaults */

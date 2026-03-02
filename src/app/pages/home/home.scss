@@ -121,13 +121,7 @@
 .section {
     padding: 100px 0;
     position: relative;
-
-    /* Subtle texture or pattern could go here */
-    background: linear-gradient(to bottom, var(--color-bg-main), var(--color-bg-surface));
-
-    &:nth-child(even) {
-        background: linear-gradient(to bottom, var(--color-bg-surface), var(--color-bg-main));
-    }
+    background: transparent;
 }
 
 .divider {
