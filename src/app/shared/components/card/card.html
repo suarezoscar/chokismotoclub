@@ -11,7 +11,7 @@
         <h3>{{ newsItem()!.title }}</h3>
 
         <div class="text-content" [class.expanded]="isExpanded()">
-            <p>{{ newsItem()!.content }}</p>
+            <div [innerHTML]="newsItem()!.content | safeHtml"></div>
         </div>
 
         <div class="news-actions">

@@ -103,24 +103,61 @@
         .text-content {
             margin-bottom: 1.5rem;
             position: relative;
+            max-height: 120px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
 
-            p {
-                color: var(--color-text-secondary);
-                font-size: 0.95rem;
-                line-height: 1.6;
-                margin: 0;
-                display: -webkit-box;
-                -webkit-line-clamp: 4;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                white-space: pre-wrap;
-                transition: all 0.3s ease;
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 40px;
+                background: linear-gradient(to bottom, transparent, var(--color-bg-elevated));
+                pointer-events: none;
+                transition: opacity 0.3s ease;
             }
 
-            &.expanded p {
-                -webkit-line-clamp: unset;
-                display: block;
-                overflow: visible;
+            ::ng-deep {
+                p {
+                    color: var(--color-text-secondary);
+                    font-size: 0.95rem;
+                    line-height: 1.6;
+                    margin: 0 0 0.5rem 0;
+                    overflow-wrap: break-word;
+                    word-break: normal;
+                }
+
+                ul,
+                ol {
+                    color: var(--color-text-secondary);
+                    font-size: 0.95rem;
+                    line-height: 1.6;
+                    margin: 0 0 0.5rem 0;
+                    padding-left: 1.5rem;
+                    overflow-wrap: break-word;
+                    word-break: normal;
+                }
+
+                a {
+                    color: var(--color-primary);
+                    text-decoration: underline;
+                }
+
+                strong,
+                b {
+                    color: var(--color-text-main);
+                    font-weight: 600;
+                }
+            }
+
+            &.expanded {
+                max-height: 2000px;
+
+                &::after {
+                    opacity: 0;
+                }
             }
         }
 

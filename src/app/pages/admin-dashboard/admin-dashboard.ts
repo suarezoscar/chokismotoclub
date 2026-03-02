@@ -4,11 +4,12 @@ import { DataService } from '../../core/services/data';
 import { AuthService } from '../../core/services/auth';
 import { StorageService } from '../../core/services/storage';
 import { CommonModule } from '@angular/common';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, QuillModule],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.scss'
 })
