@@ -62,8 +62,8 @@
             <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
     </button>
-    <img [src]="newsItem()!.imageUrl" alt="Ampliación" (click)="$event.stopPropagation()"
-        (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd()"
+    <img [src]="newsItem()!.imageUrl" alt="Ampliación" (touchstart)="onTouchStart($event)"
+        (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd()"
         [style.transform]="(isDragging() || currentTouchY() !== 0) ? 'translateY(' + currentTouchY() + 'px)' : null"
         [style.opacity]="(isDragging() || currentTouchY() !== 0) ? 1 - (currentTouchY() / -300) : null"
         [class.dragging]="isDragging()">

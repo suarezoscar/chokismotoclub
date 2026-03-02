@@ -16,8 +16,8 @@ export class StorageService {
   uploadImage(file: File, path: string): Observable<string> {
     console.log('Starting upload to Cloudinary...', { fileName: file.name, fileSize: file.size, path });
     const timestamp = Math.round(new Date().getTime() / 1000);
-    // Consolidate transformations: resize, pad, auto background, webp format
-    const transformation = 'c_pad,h_600,w_800,b_auto,f_webp';
+    // Consolidate transformations: preserve aspect ratio, optimize quality logic, webp format
+    const transformation = 'f_webp,q_auto';
 
     // Signature: SHA-1(params + api_secret) sorted alphabetically
     // timestamp=..., transformation=...
