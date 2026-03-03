@@ -1,5 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DataService } from '../../core/services/data';
 import { AuthService } from '../../core/services/auth';
 import { StorageService } from '../../core/services/storage';
@@ -8,10 +8,10 @@ import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-admin-dashboard',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, QuillModule],
   templateUrl: './admin-dashboard.html',
-  styleUrl: './admin-dashboard.scss'
+  styleUrl: './admin-dashboard.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminDashboard {
   private dataService = inject(DataService);
@@ -34,10 +34,11 @@ export class AdminDashboard {
     title: ['', Validators.required],
     content: ['', Validators.required],
     type: ['news', Validators.required],
-    date: [new Date().toISOString().slice(0, 16), Validators.required],
+    date: [this.toLocalDatetimeString(new Date()), Validators.required],
     imageUrl: [''],
-    mapsUrl: ['']
+    locations: this.fb.array([])
   });
+
   merchForm = this.fb.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
@@ -46,9 +47,33 @@ export class AdminDashboard {
   });
 
   constructor() {
-    // Load initial data
     this.dataService.getNews().subscribe(data => this.newsList.set(data));
     this.dataService.getMerch().subscribe(data => this.merchList.set(data));
+  }
+
+  /** Returns a datetime-local compatible string in LOCAL time (not UTC). */
+  private toLocalDatetimeString(d: Date): string {
+    const offsetMs = d.getTimezoneOffset() * 60_000;
+    return new Date(d.getTime() - offsetMs).toISOString().slice(0, 16);
+  }
+
+  get locationsArray(): FormArray {
+    return this.newsForm.get('locations') as FormArray;
+  }
+
+  private createLocationGroup(label = '', maps = ''): FormGroup {
+    return this.fb.group({
+      label: [label, Validators.required],
+      maps: [maps, Validators.required]
+    });
+  }
+
+  addLocation(): void {
+    this.locationsArray.push(this.createLocationGroup());
+  }
+
+  removeLocation(index: number): void {
+    this.locationsArray.removeAt(index);
   }
 
   logout() {
@@ -85,7 +110,7 @@ export class AdminDashboard {
       type: val.type as 'news' | 'event',
       date: new Date(val.date!),
       imageUrl: val.imageUrl || '',
-      mapsUrl: val.mapsUrl || ''
+      locations: (val.locations as { label: string; maps: string }[]) ?? []
     };
 
     if (this.editingNewsId()) {
@@ -95,7 +120,7 @@ export class AdminDashboard {
       });
     } else {
       this.dataService.addNews(newsData).then(() => {
-        this.cancelEditNews(); // resets form
+        this.cancelEditNews();
         alert('Noticia añadida');
       });
     }
@@ -103,13 +128,25 @@ export class AdminDashboard {
 
   editNews(item: any) {
     this.editingNewsId.set(item.id);
+
+    // Reset locations array and repopulate from item
+    while (this.locationsArray.length) {
+      this.locationsArray.removeAt(0);
+    }
+    if (Array.isArray(item.locations)) {
+      item.locations.forEach((loc: { label: string; maps: string }) => {
+        this.locationsArray.push(this.createLocationGroup(loc.label, loc.maps));
+      });
+    }
+
     this.newsForm.patchValue({
       title: item.title,
       content: item.content,
       type: item.type,
-      date: item.date instanceof Date ? item.date.toISOString().slice(0, 16) : new Date(item.date.seconds * 1000).toISOString().slice(0, 16),
-      imageUrl: item.imageUrl,
-      mapsUrl: item.mapsUrl
+      date: this.toLocalDatetimeString(
+        item.date instanceof Date ? item.date : new Date(item.date.seconds * 1000)
+      ),
+      imageUrl: item.imageUrl
     });
   }
 
@@ -121,8 +158,11 @@ export class AdminDashboard {
 
   cancelEditNews() {
     this.editingNewsId.set(null);
+    while (this.locationsArray.length) {
+      this.locationsArray.removeAt(0);
+    }
     this.newsForm.reset();
-    this.newsForm.patchValue({ type: 'news', date: new Date().toISOString().slice(0, 16) });
+    this.newsForm.patchValue({ type: 'news', date: this.toLocalDatetimeString(new Date()) });
   }
 
   // Merch Actions

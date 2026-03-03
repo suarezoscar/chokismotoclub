@@ -25,10 +25,12 @@
             </button>
             }
 
-            @if (newsItem()!.mapsUrl) {
-            <a [href]="newsItem()!.mapsUrl" target="_blank" class="maps-btn">
-                <span class="icon">📍</span> Lugar del evento
+            @if (newsItem()!.locations?.length) {
+            @for (loc of newsItem()!.locations!; track loc.maps) {
+            <a [href]="loc.maps" target="_blank" class="maps-btn">
+                <span class="icon">📍</span> {{ loc.label }}
             </a>
+            }
             }
         </div>
     </div>

@@ -32,9 +32,36 @@
                     <input formControlName="date" type="datetime-local">
                 </div>
 
-                <div class="form-group">
-                    <label>Enlace de Google Maps (Opcional)</label>
-                    <input formControlName="mapsUrl" type="url" placeholder="https://maps.google.com/...">
+                <div class="form-group locations-group">
+                    <div class="locations-header">
+                        <label>Ubicaciones (Google Maps)</label>
+                        <button type="button" class="btn-add-location" (click)="addLocation()">
+                            <span>＋</span> Añadir ubicación
+                        </button>
+                    </div>
+
+                    <div formArrayName="locations">
+                        @for (loc of locationsArray.controls; track $index) {
+                        <div [formGroupName]="$index" class="location-entry">
+                            <div class="location-fields">
+                                <div class="location-field">
+                                    <label [for]="'loc-label-' + $index">Etiqueta</label>
+                                    <input [id]="'loc-label-' + $index" formControlName="label" type="text"
+                                        placeholder="Ej: Punto de salida">
+                                </div>
+                                <div class="location-field">
+                                    <label [for]="'loc-maps-' + $index">Enlace Google Maps</label>
+                                    <input [id]="'loc-maps-' + $index" formControlName="maps" type="url"
+                                        placeholder="https://maps.google.com/...">
+                                </div>
+                            </div>
+                            <button type="button" class="btn-remove-location" (click)="removeLocation($index)"
+                                aria-label="Eliminar ubicación">
+                                ✕
+                            </button>
+                        </div>
+                        }
+                    </div>
                 </div>
 
                 <div class="form-group quill-group">
