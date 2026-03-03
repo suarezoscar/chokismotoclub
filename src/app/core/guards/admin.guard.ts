@@ -1,20 +1,22 @@
-import { Injectable, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth';
-import { map, take } from 'rxjs/operators';
+import { filter, switchMap, map, take } from 'rxjs/operators';
 
 export const adminGuard: CanActivateFn = (route, state) => {
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    return authService.user$.pipe(
+    // Wait for the Firestore allowlist to be loaded, then check the user
+    return authService.emailsReady$.pipe(
+        filter(ready => ready),
         take(1),
+        switchMap(() => authService.user$.pipe(take(1))),
         map(user => {
-            if (user) {
+            if (user && authService.isAllowed(user.email)) {
                 return true;
-            } else {
-                return router.createUrlTree(['/login']);
             }
+            return router.createUrlTree(['/login']);
         })
     );
 };
