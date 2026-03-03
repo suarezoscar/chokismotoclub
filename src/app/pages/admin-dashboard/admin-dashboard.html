@@ -1,6 +1,14 @@
 <div class="admin-dashboard">
     <div class="sidebar">
         <h3>Admin Panel</h3>
+        @if (currentUser()) {
+        <div class="user-info">
+            @if (currentUser()!.photoURL) {
+            <img [src]="currentUser()!.photoURL!" [alt]="currentUser()!.displayName || ''" class="user-avatar">
+            }
+            <span class="user-name">{{ currentUser()!.displayName || currentUser()!.email }}</span>
+        </div>
+        }
         <nav>
             <button (click)="activeTab.set('news')" [class.active]="activeTab() === 'news'">Noticias / Eventos</button>
             <button (click)="activeTab.set('merch')" [class.active]="activeTab() === 'merch'">Merchandising</button>

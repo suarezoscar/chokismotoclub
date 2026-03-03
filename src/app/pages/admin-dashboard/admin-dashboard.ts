@@ -19,6 +19,8 @@ export class AdminDashboard {
   private storageService = inject(StorageService);
   private fb = inject(FormBuilder);
 
+  readonly currentUser = this.authService.currentUser;
+
   activeTab = signal<'news' | 'merch'>('news');
   isUploading = signal(false);
 
