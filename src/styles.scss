@@ -167,6 +167,15 @@ a {
   gap: 30px;
 }
 
+.news-grid {
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr;
+    max-width: 550px;
+    margin-inline: auto;
+  }
+}
+
+
 .btn-primary,
 .btn-cta {
   display: inline-block;

@@ -23,6 +23,7 @@ export class AdminDashboard {
 
   activeTab = signal<'news' | 'merch'>('news');
   isUploading = signal(false);
+  previewModalUrl = signal<string | null>(null);
 
   // Data signals
   newsList = signal<any[]>([]);

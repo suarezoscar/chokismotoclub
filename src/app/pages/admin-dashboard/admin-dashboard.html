@@ -83,16 +83,52 @@
                     <input formControlName="imageUrl" type="hidden">
                     @if (newsForm.get('imageUrl')?.value) {
                     <p class="success">Imagen presente</p>
-                    <img [src]="newsForm.get('imageUrl')?.value" alt="Preview" height="100">
+                    <button type="button" class="img-preview-btn"
+                        (click)="previewModalUrl.set(newsForm.get('imageUrl')?.value || null)"
+                        aria-label="Ver imagen completa">
+                        <img [src]="newsForm.get('imageUrl')?.value" alt="Preview" class="img-preview">
+                        <span class="img-preview-overlay">🔍 Ver</span>
+                    </button>
                     }
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" [disabled]="newsForm.invalid || isUploading()" class="btn-primary">
-                        {{ isUploading() ? 'Subiendo...' : (editingNewsId() ? 'Actualizar' : 'Publicar') }}
+                    <button type="submit" [disabled]="newsForm.invalid || isUploading()" class="btn-submit">
+                        @if (isUploading()) {
+                        <svg class="spin" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                        </svg>
+                        Subiendo...
+                        } @else if (editingNewsId()) {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17 21 17 13 7 13 7 21" />
+                            <polyline points="7 3 7 8 15 8" />
+                        </svg>
+                        Actualizar Noticia
+                        } @else {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Publicar Noticia
+                        }
                     </button>
                     @if (editingNewsId()) {
-                    <button type="button" (click)="cancelEditNews()" class="btn-secondary">Cancelar</button>
+                    <button type="button" (click)="cancelEditNews()" class="btn-cancel">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                        Cancelar edición
+                    </button>
                     }
                 </div>
             </form>
@@ -145,16 +181,52 @@
                     <input formControlName="imageUrl" type="hidden">
                     @if (merchForm.get('imageUrl')?.value) {
                     <p class="success">Imagen presente</p>
-                    <img [src]="merchForm.get('imageUrl')?.value" alt="Preview" height="100">
+                    <button type="button" class="img-preview-btn"
+                        (click)="previewModalUrl.set(merchForm.get('imageUrl')?.value || null)"
+                        aria-label="Ver imagen completa">
+                        <img [src]="merchForm.get('imageUrl')?.value" alt="Preview" class="img-preview">
+                        <span class="img-preview-overlay">🔍 Ver</span>
+                    </button>
                     }
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" [disabled]="merchForm.invalid || isUploading()" class="btn-primary">
-                        {{ isUploading() ? 'Subiendo...' : (editingMerchId() ? 'Actualizar' : 'Añadir') }}
+                    <button type="submit" [disabled]="merchForm.invalid || isUploading()" class="btn-submit">
+                        @if (isUploading()) {
+                        <svg class="spin" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                        </svg>
+                        Subiendo...
+                        } @else if (editingMerchId()) {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17 21 17 13 7 13 7 21" />
+                            <polyline points="7 3 7 8 15 8" />
+                        </svg>
+                        Actualizar Producto
+                        } @else {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Añadir Producto
+                        }
                     </button>
                     @if (editingMerchId()) {
-                    <button type="button" (click)="cancelEditMerch()" class="btn-secondary">Cancelar</button>
+                    <button type="button" (click)="cancelEditMerch()" class="btn-cancel">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                        Cancelar edición
+                    </button>
                     }
                 </div>
             </form>
@@ -180,3 +252,14 @@
         }
     </div>
 </div>
+
+<!-- Image lightbox modal -->
+@if (previewModalUrl()) {
+<div class="img-modal-backdrop" (click)="previewModalUrl.set(null)" role="dialog" aria-modal="true"
+    aria-label="Vista previa de imagen">
+    <div class="img-modal-content" (click)="$event.stopPropagation()">
+        <img [src]="previewModalUrl()!" alt="Vista previa completa" class="img-modal-img">
+        <button class="img-modal-close" (click)="previewModalUrl.set(null)" aria-label="Cerrar">✕</button>
+    </div>
+</div>
+}

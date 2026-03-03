@@ -20,11 +20,11 @@
         <h2 class="section-title reveal-on-scroll">Últimas Noticias & Eventos</h2>
 
         @if (newsItems() === undefined) {
-        <div class="grid reveal-on-scroll">
+        <div class="grid news-grid reveal-on-scroll">
             <app-skeleton></app-skeleton>
         </div>
         } @else {
-        <div class="grid reveal-on-scroll" [@listAnimation]="newsItems()?.length">
+        <div class="grid news-grid reveal-on-scroll" [@listAnimation]="newsItems()?.length">
             @for (item of newsItems(); track item.id) {
             <app-card [newsItem]="item" />
             }

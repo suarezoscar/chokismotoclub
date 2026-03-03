@@ -304,7 +304,7 @@
                     }
 
                     .ql-editor {
-                        min-height: 200px;
+                        min-height: 300px;
                     }
                 }
             }
@@ -565,4 +565,216 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+// Image preview thumbnail button
+.img-preview-btn {
+    display: block;
+    position: relative;
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden;
+    max-width: 100%;
+    width: fit-content;
+    margin-top: 0.5rem;
+    transition: border-color 0.2s ease;
+
+    &:hover {
+        border-color: var(--color-primary);
+
+        .img-preview-overlay {
+            opacity: 1;
+        }
+    }
+
+    .img-preview {
+        display: block;
+        max-width: 100%;
+        max-height: 240px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 5px;
+    }
+
+    .img-preview-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.55);
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 600;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        border-radius: 5px;
+    }
+}
+
+// Lightbox modal
+.img-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.img-modal-content {
+    position: relative;
+    max-width: min(90vw, 900px);
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-modal-img {
+    display: block;
+    max-width: 100%;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.8);
+}
+
+.img-modal-close {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-main);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+        color: #000;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+}
+
+// ─── Form action buttons ────────────────────────────────────────────
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: linear-gradient(135deg, var(--color-primary), rgba(180, 100, 40, 0.85));
+    color: #000;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    box-shadow: 0 2px 12px rgba(198, 139, 89, 0.3);
+    letter-spacing: 0.02em;
+
+    svg {
+        flex-shrink: 0;
+    }
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(198, 139, 89, 0.45);
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 3px;
+    }
+}
+
+.btn-cancel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.75rem 1.25rem;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid rgba(207, 102, 121, 0.35);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    svg {
+        flex-shrink: 0;
+        color: #cf6679;
+    }
+
+    &:hover {
+        background: rgba(207, 102, 121, 0.1);
+        border-color: #cf6679;
+        color: #ff8a80;
+
+        svg {
+            color: #ff8a80;
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid #cf6679;
+        outline-offset: 3px;
+    }
+}
+
+// Spinner animation for uploading state
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spin {
+    animation: spin 0.8s linear infinite;
 }
