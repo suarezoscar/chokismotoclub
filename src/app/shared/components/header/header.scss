@@ -46,7 +46,8 @@
     align-items: center;
     gap: 1rem;
     animation: fadeInUp 1s ease-out;
-    /* Entrance animation */
+    text-decoration: none;
+    cursor: pointer;
 
     img {
         border-radius: 50%;
