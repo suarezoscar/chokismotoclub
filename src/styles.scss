@@ -56,6 +56,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -73,8 +77,6 @@ body {
     content: '';
     position: fixed;
     inset: -20px;
-    width: calc(100vw + 40px);
-    height: calc(100vh + 40px);
     background-image: url('/assets/logo.jpg');
     background-size: cover;
     background-position: center;
