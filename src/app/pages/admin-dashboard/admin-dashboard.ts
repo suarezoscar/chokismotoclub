@@ -5,10 +5,11 @@ import { AuthService } from '../../core/services/auth';
 import { StorageService } from '../../core/services/storage';
 import { CommonModule } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
+import { SafeHtmlPipe } from '../../core/pipes/safe-html-pipe';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [CommonModule, ReactiveFormsModule, QuillModule],
+  imports: [CommonModule, ReactiveFormsModule, QuillModule, SafeHtmlPipe],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -24,6 +25,7 @@ export class AdminDashboard {
   activeTab = signal<'news' | 'merch'>('news');
   isUploading = signal(false);
   previewModalUrl = signal<string | null>(null);
+  showPreview = signal(false);
 
   // Data signals
   newsList = signal<any[]>([]);

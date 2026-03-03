@@ -130,6 +130,16 @@
                         Cancelar edición
                     </button>
                     }
+                    <button type="button" (click)="showPreview.set(true)" class="btn-preview"
+                        [disabled]="!newsForm.get('content')?.value && !newsForm.get('title')?.value">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        Previsualizar
+                    </button>
                 </div>
             </form>
 
@@ -260,6 +270,41 @@
     <div class="img-modal-content" (click)="$event.stopPropagation()">
         <img [src]="previewModalUrl()!" alt="Vista previa completa" class="img-modal-img">
         <button class="img-modal-close" (click)="previewModalUrl.set(null)" aria-label="Cerrar">✕</button>
+    </div>
+</div>
+}
+
+<!-- News preview modal -->
+@if (showPreview()) {
+<div class="news-preview-backdrop" (click)="showPreview.set(false)" role="dialog" aria-modal="true"
+    aria-label="Previsualizar noticia">
+    <div class="news-preview-container" (click)="$event.stopPropagation()">
+        <div class="news-preview-header">
+            <span class="news-preview-label">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+                Vista previa
+            </span>
+            <button class="news-preview-close" (click)="showPreview.set(false)" aria-label="Cerrar">✕</button>
+        </div>
+
+        <div class="news-preview-card">
+            @if (newsForm.get('imageUrl')?.value) {
+            <div class="news-preview-image">
+                <img [src]="newsForm.get('imageUrl')!.value" alt="">
+                <span class="badge">{{ newsForm.get('type')?.value === 'event' ? 'EVENTO' : 'NOTICIA' }}</span>
+            </div>
+            }
+            <div class="news-preview-body">
+                <span class="date">{{ newsForm.get('date')?.value | date:'EEEE dd/MM/yyyy HH:mm' | titlecase }}</span>
+                <h3>{{ newsForm.get('title')?.value || '(sin título)' }}</h3>
+                <div class="news-preview-content" [innerHTML]="newsForm.get('content')?.value | safeHtml"></div>
+            </div>
+        </div>
     </div>
 </div>
 }
